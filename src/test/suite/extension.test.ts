@@ -72,6 +72,24 @@ suite('Extension Test Suite', () => {
 			}));
 		});
 
+		it('should return repository service template', () => {
+			getFileTemplate({
+				name: 'test',
+				fullName: 'test.repository.ts',
+				type: 'service',
+				uri: vscode.Uri.parse('test'),
+				associatedArray: 'providers'
+			}).then((result => {
+				expect(result).to.equal(
+					`import { Injectable } from '@nestjs/common';
+
+					@Injectable()
+					export class TestRepository {}
+					`
+				);
+			}));
+		});
+
 		it('should return controller template', () => {
 			getFileTemplate({
 				name: 'test',
