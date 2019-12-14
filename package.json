@@ -1,0 +1,87 @@
+{
+	"name": "nestjs-files",
+	"publisher": "AbhijoyBasak",
+	"displayName": "NestJS Files",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/SpartanX1/nestjs-vscode-extension"
+	},
+	"bugs": {
+		"url": "https://github.com/SpartanX1/nestjs-vscode-extension/issues",
+		"email": "basak.abhijoy@gmail.com"
+	  },
+	"description": "Quickly create NestJS Files",
+	"icon": "images/icon.png",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.40.0"
+	},
+	"categories": [
+		"Other", "Snippets"
+	],
+	"activationEvents": [
+		"onCommand:extension.GenerateModule",
+		"onCommand:extension.GenerateService",
+		"onCommand:extension.GenerateController"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.GenerateModule",
+				"title": "NestJS - Generate Module"
+			},
+			{
+				"command": "extension.GenerateService",
+				"title": "NestJS - Generate Service"
+			},
+			{
+				"command": "extension.GenerateController",
+				"title": "NestJS - Generate Controller"
+			}
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"command": "extension.GenerateModule",
+					"group": "2_workspace"
+				},
+				{
+					"command": "extension.GenerateService",
+					"group": "2_workspace"
+				},
+				{
+					"command": "extension.GenerateController",
+					"group": "2_workspace"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "rm -rf ./out && tsc -p ./ && npm run copy",
+		"copy": "cp -r src/templates ./out",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/chai": "^4.2.7",
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.7",
+		"@types/mustache": "^0.8.32",
+		"@types/node": "^12.11.7",
+		"@types/vscode": "^1.40.0",
+		"chai": "^4.2.0",
+		"glob": "^7.1.5",
+		"mocha": "^6.2.2",
+		"tslint": "^5.20.0",
+		"typescript": "^3.6.4",
+		"vscode-test": "^1.2.2"
+	},
+	"dependencies": {
+		"@types/fs-extra": "^8.0.1",
+		"fs-extra": "^8.1.0",
+		"mustache": "^3.1.0"
+	}
+}
