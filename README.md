@@ -14,7 +14,7 @@ Menu Options  |
 NestJS - Generate Controller |
 NestJS - Generate Module |
 NestJS - Generate Service |
-NestJS - Generate repository Service |
+NestJS - Generate Repository Service |
 
 > It will also automatically add your created files to app module or your own module depending on the context
 
