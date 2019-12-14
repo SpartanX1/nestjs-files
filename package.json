@@ -4,10 +4,10 @@
 	"displayName": "NestJS Files",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/SpartanX1/nestjs-vscode-extension"
+		"url": "https://github.com/SpartanX1/nestjs-files"
 	},
 	"bugs": {
-		"url": "https://github.com/SpartanX1/nestjs-vscode-extension/issues",
+		"url": "https://github.com/SpartanX1/nestjs-files/issues",
 		"email": "basak.abhijoy@gmail.com"
 	  },
 	"description": "Quickly create NestJS Files",
