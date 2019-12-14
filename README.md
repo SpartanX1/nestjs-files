@@ -2,8 +2,7 @@
 
 vs code extention to quickly create **NestJS files** using **GUI** 
 
-![](https://github.com/SpartanX1/nestjs-files/blob/master/images/demo.gif)
-
+![](images/demo.gif)
 
 ## Features
 
