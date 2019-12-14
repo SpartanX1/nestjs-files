@@ -86,7 +86,35 @@ export function activate(context: ExtensionContext) {
 		}
 	});
 
-	context.subscriptions.push(disposableModuleCommand, disposableServiceCommand, disposableControllerCommand);
+	let disposableRepositoryCommand = commands.registerCommand('extension.GenerateRepository', (resource: Uri) => {
+
+		if (workspace === undefined)
+		{
+			window.showErrorMessage('Please select a workspace first');
+		}
+		else
+		{
+			window.showInputBox({
+				placeHolder: "Please enter repository name",
+			}).then((input) => {
+				if (input === undefined) { return; }
+				if (!invalidFileNames.test(input)) {
+					createFile({ 
+						name: input, 
+						type: 'service', 
+						associatedArray: 'providers', 
+						uri: resource,
+						fullName: input.toLowerCase() + `.repository.ts`
+					});
+				}
+				else {
+					window.showErrorMessage('Invalid filename');
+				}
+			});
+		}
+	});
+
+	context.subscriptions.push(disposableModuleCommand, disposableServiceCommand, disposableControllerCommand, disposableRepositoryCommand);
 }
 
 export function deactivate() {}

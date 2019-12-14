@@ -28,7 +28,7 @@ export async function createFile(file: NestFile): Promise<boolean | undefined | 
 export async function addFilesToAppModule(file: NestFile): Promise<any> {
     let moduleFile: Uri[] = [];
 
-    if (file.type === 'service' || file.type === 'controller') {
+    if (file.type === 'service' || file.type === 'controller' || file.type === 'repository') {
         moduleFile = await workspace.findFiles(`**/${file.name}.module.ts`, '**/node_modules/**', 1);
     }
 

@@ -9,7 +9,7 @@
 	"bugs": {
 		"url": "https://github.com/SpartanX1/nestjs-files/issues",
 		"email": "basak.abhijoy@gmail.com"
-	  },
+	},
 	"description": "Quickly create NestJS Files",
 	"icon": "images/icon.png",
 	"version": "0.0.1",
@@ -17,12 +17,14 @@
 		"vscode": "^1.40.0"
 	},
 	"categories": [
-		"Other", "Snippets"
+		"Other",
+		"Snippets"
 	],
 	"activationEvents": [
 		"onCommand:extension.GenerateModule",
 		"onCommand:extension.GenerateService",
-		"onCommand:extension.GenerateController"
+		"onCommand:extension.GenerateController",
+		"onCommand:extension.GenerateRepository"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -38,6 +40,10 @@
 			{
 				"command": "extension.GenerateController",
 				"title": "NestJS - Generate Controller"
+			},
+			{
+				"command": "extension.GenerateRepository",
+				"title": "NestJS - Generate Repository Service"
 			}
 		],
 		"menus": {
@@ -52,6 +58,10 @@
 				},
 				{
 					"command": "extension.GenerateController",
+					"group": "2_workspace"
+				},
+				{
+					"command": "extension.GenerateRepository",
 					"group": "2_workspace"
 				}
 			]
