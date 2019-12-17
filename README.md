@@ -15,9 +15,9 @@ NestJS - Generate Controller |
 NestJS - Generate Module |
 NestJS - Generate Service |
 NestJS - Generate Exception |
-NestJS - Generate Middleware |
+NestJS - Generate Middleware (requires nest v6) |
 NestJS - Generate Pipe |
-NestJS - Generate Interceptor |
+NestJS - Generate Interceptor (requires nest v6) |
 
 > It will also automatically add your created files to app module or your own module depending on the context
 
