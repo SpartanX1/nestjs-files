@@ -89,16 +89,113 @@ suite('Extension Test Suite', () => {
 				);
 			}));
 		});
+
+		it('should return middleware template', () => {
+			getFileTemplate({
+				name: 'test',
+				fullName: 'test.middleware.ts',
+				type: 'middleware',
+				uri: vscode.Uri.parse('test'),
+				associatedArray: undefined
+			}).then((result => {
+				expect(result).to.equal(
+					`import { Injectable, NestMiddleware } from '@nestjs/common';
+					import { Request, Response } from 'express';
+					
+					@Injectable()
+					export class {{ Name }}Middleware implements NestMiddleware {
+					  use(req: Request, res: Response, next: Function) {
+						console.log('Request...');
+						next();
+					  }
+					}					
+					`
+				);
+			}));
+		});
+
+		it('should return exception template', () => {
+			getFileTemplate({
+				name: 'test',
+				fullName: 'test.exception.ts',
+				type: 'exception',
+				uri: vscode.Uri.parse('test'),
+				associatedArray: undefined
+			}).then((result => {
+				expect(result).to.equal(
+					`import { HttpException, HttpStatus } from '@nestjs/common';
+
+					export class {{ Name }}Exception extends HttpException {
+					  constructor() {
+						super('{{ Name }}', HttpStatus.I_AM_A_TEAPOT);
+					  }
+					}			
+					`
+				);
+			}));
+		});
+
+		it('should return interceptor template', () => {
+			getFileTemplate({
+				name: 'test',
+				fullName: 'test.interceptor.ts',
+				type: 'interceptor',
+				uri: vscode.Uri.parse('test'),
+				associatedArray: undefined
+			}).then((result => {
+				expect(result).to.equal(
+					`import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
+					import { Observable } from 'rxjs';
+					import { tap } from 'rxjs/operators';
+					
+					@Injectable()
+					export class {{ Name }}Interceptor implements NestInterceptor {
+					  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+						console.log('Before...');
+						return next
+						  .handle()
+						  .pipe(
+							tap(() => console.log('After...')),
+						  );
+					  }
+					}	
+					`
+				);
+			}));
+		});
+
+		it('should return pipe template', () => {
+			getFileTemplate({
+				name: 'test',
+				fullName: 'test.pipe.ts',
+				type: 'pipe',
+				uri: vscode.Uri.parse('test'),
+				associatedArray: undefined
+			}).then((result => {
+				expect(result).to.equal(
+					`import { PipeTransform, Injectable, ArgumentMetadata } from '@nestjs/common';
+
+					@Injectable()
+					export class {{ Name }}Pipe implements PipeTransform {
+					  transform(value: any, metadata: ArgumentMetadata) {
+						return value;
+					  }
+					}
+					`
+				);
+			}));
+		});
+
 	});
 
-	describe('File creation', () => { 
+	describe('File creation', () => {
 		it('should create module file', () => {
 			createFile(
-				{ 
-					name: 'test', 
-					type: 'module', 
-					associatedArray: 'imports', 
-					uri: vscode.Uri.parse('test/test.module.ts'), 
+				{
+					name: 'test',
+					type: 'module',
+					associatedArray: 'imports',
+					uri: vscode.Uri.parse('test/test.module.ts'),
 					fullName: `test.module.ts`
 				}
 			).then((result) => {

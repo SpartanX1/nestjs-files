@@ -19,13 +19,16 @@ export async function createFile(file: NestFile): Promise<boolean | undefined | 
                 return workspace.fs.writeFile(file.uri, new TextEncoder().encode(data));
             })
             .then(() => {
-                return addFilesToAppModule(file);
+                if (file.associatedArray !== undefined) {
+                    return addFilesToAppModule(file);
+                }
+                return true;
             })
             .catch(err =>  { return window.showErrorMessage(err); });
     }
 }
 
-export async function addFilesToAppModule(file: NestFile): Promise<any> {
+export async function addFilesToAppModule(file: NestFile): Promise<boolean> {
     let moduleFile: Uri[] = [];
 
     if (file.type === 'service' || file.type === 'controller') {
@@ -41,10 +44,12 @@ export async function addFilesToAppModule(file: NestFile): Promise<any> {
         .then(() => {
             return workspace.fs.readFile(moduleFile[0]);
         })
-        .then((data) => { 
-            return addToArray(data, file, moduleFile[0]); 
+        .then((data) => {
+            return addToArray(data, file, moduleFile[0]);  
         });
     }
+
+    return false;
 }
 
 export async function getFileTemplate(file: NestFile): Promise<string> {
@@ -68,20 +73,27 @@ export async function getImportTemplate(file: NestFile, appModule: Uri): Promise
         });
 }
 
-export async function addToArray(data: Uint8Array, file: NestFile, modulePath: Uri): Promise<any> {
-    const pattern = getArraySchematics(file.associatedArray);
-    let match;
-    let pos: Position;
-    let tempStrData = new TextDecoder().decode(data);
+export async function addToArray(data: Uint8Array, file: NestFile, modulePath: Uri): Promise<boolean> {
+    
+    if (file.associatedArray !== undefined) {
+        const pattern = getArraySchematics(file.associatedArray);
+        let match;
+        let pos: Position;
+        let tempStrData = new TextDecoder().decode(data);
+    
+        if (match = pattern.exec(tempStrData)){
+            pos = getLineNoFromString(tempStrData, match);
+            const toInsert = '\n        ' + getClassName(file.name) + getPascalCase(file.type) + ', ';
+            let edit = new WorkspaceEdit();
+            edit.insert(modulePath, pos, toInsert);
+            const importPath = await getImportTemplate(file, modulePath);
+            edit.insert(modulePath, new Position(0, 0), importPath + '\n');
+    
+            return workspace.applyEdit(edit);
+        }
 
-    if (match = pattern.exec(tempStrData)){
-        pos = getLineNoFromString(tempStrData, match);
-        const toInsert = '\n        ' + getClassName(file.name) + getPascalCase(file.type) + ', ';
-        let edit = new WorkspaceEdit();
-        edit.insert(modulePath, pos, toInsert);
-        const importPath = await getImportTemplate(file, modulePath);
-        edit.insert(modulePath, new Position(0, 0), importPath + '\n');
-
-        return workspace.applyEdit(edit);
+        return false;
     }
+
+    return false;
 }

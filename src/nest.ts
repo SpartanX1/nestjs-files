@@ -5,5 +5,5 @@ export class NestFile {
     name: string;
     fullName: string;
     uri: Uri;
-    associatedArray: string;
+    associatedArray: string | undefined;
 }

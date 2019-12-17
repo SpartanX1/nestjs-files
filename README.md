@@ -14,6 +14,10 @@ Menu Options  |
 NestJS - Generate Controller |
 NestJS - Generate Module |
 NestJS - Generate Service |
+NestJS - Generate Exception |
+NestJS - Generate Middleware |
+NestJS - Generate Pipe |
+NestJS - Generate Interceptor |
 
 > It will also automatically add your created files to app module or your own module depending on the context
 

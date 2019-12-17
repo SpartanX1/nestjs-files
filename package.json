@@ -12,9 +12,9 @@
 	  },
 	"description": "Quickly create NestJS Files",
 	"icon": "images/icon.png",
-	"version": "0.0.1",
+	"version": "0.1.1",
 	"engines": {
-		"vscode": "^1.36.0"
+		"vscode": "^1.40.0"
 	},
 	"categories": [
 		"Other", "Snippets"
@@ -22,7 +22,11 @@
 	"activationEvents": [
 		"onCommand:extension.GenerateModule",
 		"onCommand:extension.GenerateService",
-		"onCommand:extension.GenerateController"
+		"onCommand:extension.GenerateController",
+		"onCommand:extension.GenerateException",
+		"onCommand:extension.GenerateMiddleware",
+		"onCommand:extension.GenerateInterceptor",
+		"onCommand:extension.GeneratePipe"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -38,6 +42,22 @@
 			{
 				"command": "extension.GenerateController",
 				"title": "NestJS - Generate Controller"
+			},
+			{
+				"command": "extension.GenerateException",
+				"title": "NestJS - Generate Exception"
+			},
+			{
+				"command": "extension.GenerateMiddleware",
+				"title": "NestJS - Generate Middleware"
+			},
+			{
+				"command": "extension.GenerateInterceptor",
+				"title": "NestJS - Generate Interceptor"
+			},
+			{
+				"command": "extension.GeneratePipe",
+				"title": "NestJS - Generate Pipe"
 			}
 		],
 		"menus": {
@@ -52,6 +72,22 @@
 				},
 				{
 					"command": "extension.GenerateController",
+					"group": "2_workspace"
+				},
+				{
+					"command": "extension.GenerateException",
+					"group": "2_workspace"
+				},
+				{
+					"command": "extension.GenerateMiddleware",
+					"group": "2_workspace"
+				},
+				{
+					"command": "extension.GenerateInterceptor",
+					"group": "2_workspace"
+				},
+				{
+					"command": "extension.GeneratePipe",
 					"group": "2_workspace"
 				}
 			]

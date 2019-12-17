@@ -86,7 +86,123 @@ export function activate(context: ExtensionContext) {
 		}
 	});
 
-	context.subscriptions.push(disposableModuleCommand, disposableServiceCommand, disposableControllerCommand);
+	let disposableExceptionCommand = commands.registerCommand('extension.GenerateException', (resource) => {
+		if (workspace === undefined)
+		{
+			window.showErrorMessage('Please select a workspace first');
+		}
+		else
+		{
+			window.showInputBox({
+				placeHolder: "Please enter Exception name",
+			}).then((input) => {
+				if (input === undefined) { return; }
+				if (!invalidFileNames.test(input)) {
+					createFile({ 
+						name: input, 
+						type: 'exception', 
+						associatedArray: undefined, 
+						uri: resource,
+						fullName: input.toLowerCase() + `.exception.ts`
+					});
+				}
+				else {
+					window.showErrorMessage('Invalid filename');
+				}
+			});
+		}
+	});
+
+	let disposableMiddlewareCommand = commands.registerCommand('extension.GenerateMiddleware', (resource) => {
+		if (workspace === undefined)
+		{
+			window.showErrorMessage('Please select a workspace first');
+		}
+		else
+		{
+			window.showInputBox({
+				placeHolder: "Please enter Middleware name",
+			}).then((input) => {
+				if (input === undefined) { return; }
+				if (!invalidFileNames.test(input)) {
+					createFile({ 
+						name: input, 
+						type: 'middleware', 
+						associatedArray: undefined, 
+						uri: resource,
+						fullName: input.toLowerCase() + `.middleware.ts`
+					});
+				}
+				else {
+					window.showErrorMessage('Invalid filename');
+				}
+			});
+		}
+	});
+
+	let disposableInterceptorCommand = commands.registerCommand('extension.GenerateInterceptor', (resource) => {
+		if (workspace === undefined)
+		{
+			window.showErrorMessage('Please select a workspace first');
+		}
+		else
+		{
+			window.showInputBox({
+				placeHolder: "Please enter Interceptor name",
+			}).then((input) => {
+				if (input === undefined) { return; }
+				if (!invalidFileNames.test(input)) {
+					createFile({ 
+						name: input, 
+						type: 'interceptor', 
+						associatedArray: undefined, 
+						uri: resource,
+						fullName: input.toLowerCase() + `.interceptor.ts`
+					});
+				}
+				else {
+					window.showErrorMessage('Invalid filename');
+				}
+			});
+		}
+	});
+
+	let disposablePipeCommand = commands.registerCommand('extension.GeneratePipe', (resource) => {
+		if (workspace === undefined)
+		{
+			window.showErrorMessage('Please select a workspace first');
+		}
+		else
+		{
+			window.showInputBox({
+				placeHolder: "Please enter Pipe name",
+			}).then((input) => {
+				if (input === undefined) { return; }
+				if (!invalidFileNames.test(input)) {
+					createFile({ 
+						name: input, 
+						type: 'pipe', 
+						associatedArray: undefined, 
+						uri: resource,
+						fullName: input.toLowerCase() + `.pipe.ts`
+					});
+				}
+				else {
+					window.showErrorMessage('Invalid filename');
+				}
+			});
+		}
+	});
+
+	context.subscriptions.push(
+		disposableModuleCommand, 
+		disposableServiceCommand, 
+		disposableControllerCommand,
+		disposableExceptionCommand,
+		disposableMiddlewareCommand,
+		disposableInterceptorCommand,
+		disposablePipeCommand
+		);
 }
 
 export function deactivate() {}
