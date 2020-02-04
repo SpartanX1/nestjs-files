@@ -6,7 +6,7 @@ export function getPascalCase(str: string): string {
 }
 
 export function getRelativePathForImport(appModule: Uri, importFile: Uri) {
-    return './' + relative(dirname(appModule.path), importFile.path).replace('\\', '/').replace('.ts', '');
+    return './' + relative(dirname(appModule.path), importFile.path).replace(/\\/g, '/').replace('.ts', '');
 }
 
 export function getArraySchematics(arrayType: string): RegExp {
