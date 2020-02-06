@@ -18,6 +18,8 @@ NestJS - Generate Exception |
 NestJS - Generate Middleware (requires nest v6) |
 NestJS - Generate Pipe |
 NestJS - Generate Interceptor (requires nest v6) |
+NestJS - Generate Decorator |
+NestJS - Generate Guard |
 
 > It will also automatically add your created files to app module or your own module depending on the context
 

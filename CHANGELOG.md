@@ -1,4 +1,9 @@
-## 0.0.1
+## 0.2.0
+
+- Added option for custom decorators
+- Added option for guards
+
+## 0.1.2
 
 - Fixed forward slashes in import paths
 
