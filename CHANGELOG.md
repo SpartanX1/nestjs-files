@@ -1,3 +1,7 @@
+## 0.3.0
+
+- updated custom decorator syntax for nest v7
+
 ## 0.2.0
 
 - Added option for custom decorators

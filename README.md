@@ -15,9 +15,9 @@ NestJS - Generate Controller |
 NestJS - Generate Module |
 NestJS - Generate Service |
 NestJS - Generate Exception |
-NestJS - Generate Middleware (requires nest v6) |
+NestJS - Generate Middleware |
 NestJS - Generate Pipe |
-NestJS - Generate Interceptor (requires nest v6) |
+NestJS - Generate Interceptor |
 NestJS - Generate Decorator |
 NestJS - Generate Guard |
 
