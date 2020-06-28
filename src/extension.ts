@@ -8,15 +8,16 @@ export function activate(context: ExtensionContext) {
 	let disposableModuleCommand = commands.registerCommand('extension.GenerateModule', (resource: Uri) => {
 
 		if (workspace === undefined) {
-			window.showErrorMessage('Please select a workspace first');
+			return window.showErrorMessage('Please select a workspace first');
 		}
 		else {
-			window.showInputBox({
+			return window.showInputBox({
 				placeHolder: "Please enter module name",
-			}).then((input) => {
+			})
+			.then<any>((input) => {
 				if (input === undefined) { return; }
 				if (!invalidFileNames.test(input)) {
-					createFile({
+					return createFile({
 						name: input,
 						type: 'module',
 						associatedArray: 'imports',
@@ -25,7 +26,7 @@ export function activate(context: ExtensionContext) {
 					});
 				}
 				else {
-					window.showErrorMessage('Invalid filename');
+					return  window.showErrorMessage('Invalid filename');
 				}
 			});
 		}
@@ -33,15 +34,16 @@ export function activate(context: ExtensionContext) {
 
 	let disposableServiceCommand = commands.registerCommand('extension.GenerateService', (resource) => {
 		if (workspace === undefined) {
-			window.showErrorMessage('Please select a workspace first');
+			return window.showErrorMessage('Please select a workspace first');
 		}
 		else {
 			window.showInputBox({
 				placeHolder: "Please enter Service name",
-			}).then((input) => {
+			})
+			.then<any>((input) => {
 				if (input === undefined) { return; }
 				if (!invalidFileNames.test(input)) {
-					createFile({
+					return createFile({
 						name: input,
 						type: 'service',
 						associatedArray: 'providers',
@@ -50,7 +52,7 @@ export function activate(context: ExtensionContext) {
 					});
 				}
 				else {
-					window.showErrorMessage('Invalid filename');
+					return window.showErrorMessage('Invalid filename');
 				}
 			});
 		}
@@ -58,15 +60,15 @@ export function activate(context: ExtensionContext) {
 
 	let disposableControllerCommand = commands.registerCommand('extension.GenerateController', (resource) => {
 		if (workspace === undefined) {
-			window.showErrorMessage('Please select a workspace first');
+			return window.showErrorMessage('Please select a workspace first');
 		}
 		else {
 			window.showInputBox({
 				placeHolder: "Please enter Controller name",
-			}).then((input) => {
+			}).then<any>((input) => {
 				if (input === undefined) { return; }
 				if (!invalidFileNames.test(input)) {
-					createFile({
+					return createFile({
 						name: input,
 						type: 'controller',
 						associatedArray: 'controllers',
@@ -75,7 +77,7 @@ export function activate(context: ExtensionContext) {
 					});
 				}
 				else {
-					window.showErrorMessage('Invalid filename');
+					return window.showErrorMessage('Invalid filename');
 				}
 			});
 		}
@@ -83,15 +85,15 @@ export function activate(context: ExtensionContext) {
 
 	let disposableExceptionCommand = commands.registerCommand('extension.GenerateException', (resource) => {
 		if (workspace === undefined) {
-			window.showErrorMessage('Please select a workspace first');
+			return window.showErrorMessage('Please select a workspace first');
 		}
 		else {
 			window.showInputBox({
 				placeHolder: "Please enter Exception name",
-			}).then((input) => {
+			}).then<any>((input) => {
 				if (input === undefined) { return; }
 				if (!invalidFileNames.test(input)) {
-					createFile({
+					return createFile({
 						name: input,
 						type: 'exception',
 						associatedArray: undefined,
@@ -100,7 +102,7 @@ export function activate(context: ExtensionContext) {
 					});
 				}
 				else {
-					window.showErrorMessage('Invalid filename');
+					return window.showErrorMessage('Invalid filename');
 				}
 			});
 		}
@@ -108,15 +110,15 @@ export function activate(context: ExtensionContext) {
 
 	let disposableMiddlewareCommand = commands.registerCommand('extension.GenerateMiddleware', (resource) => {
 		if (workspace === undefined) {
-			window.showErrorMessage('Please select a workspace first');
+			return window.showErrorMessage('Please select a workspace first');
 		}
 		else {
 			window.showInputBox({
 				placeHolder: "Please enter Middleware name",
-			}).then((input) => {
+			}).then<any>((input) => {
 				if (input === undefined) { return; }
 				if (!invalidFileNames.test(input)) {
-					createFile({
+					return createFile({
 						name: input,
 						type: 'middleware',
 						associatedArray: undefined,
@@ -125,7 +127,7 @@ export function activate(context: ExtensionContext) {
 					});
 				}
 				else {
-					window.showErrorMessage('Invalid filename');
+					return window.showErrorMessage('Invalid filename');
 				}
 			});
 		}
@@ -133,15 +135,15 @@ export function activate(context: ExtensionContext) {
 
 	let disposableInterceptorCommand = commands.registerCommand('extension.GenerateInterceptor', (resource) => {
 		if (workspace === undefined) {
-			window.showErrorMessage('Please select a workspace first');
+			return window.showErrorMessage('Please select a workspace first');
 		}
 		else {
 			window.showInputBox({
 				placeHolder: "Please enter Interceptor name",
-			}).then((input) => {
+			}).then<any>((input) => {
 				if (input === undefined) { return; }
 				if (!invalidFileNames.test(input)) {
-					createFile({
+					return createFile({
 						name: input,
 						type: 'interceptor',
 						associatedArray: undefined,
@@ -150,7 +152,7 @@ export function activate(context: ExtensionContext) {
 					});
 				}
 				else {
-					window.showErrorMessage('Invalid filename');
+					return window.showErrorMessage('Invalid filename');
 				}
 			});
 		}
@@ -158,15 +160,15 @@ export function activate(context: ExtensionContext) {
 
 	let disposablePipeCommand = commands.registerCommand('extension.GeneratePipe', (resource) => {
 		if (workspace === undefined) {
-			window.showErrorMessage('Please select a workspace first');
+			return window.showErrorMessage('Please select a workspace first');
 		}
 		else {
 			window.showInputBox({
 				placeHolder: "Please enter Pipe name",
-			}).then((input) => {
+			}).then<any>((input) => {
 				if (input === undefined) { return; }
 				if (!invalidFileNames.test(input)) {
-					createFile({
+					return createFile({
 						name: input,
 						type: 'pipe',
 						associatedArray: undefined,
@@ -175,7 +177,7 @@ export function activate(context: ExtensionContext) {
 					});
 				}
 				else {
-					window.showErrorMessage('Invalid filename');
+					return window.showErrorMessage('Invalid filename');
 				}
 			});
 		}
@@ -183,15 +185,15 @@ export function activate(context: ExtensionContext) {
 
 	let disposableGuardCommand = commands.registerCommand('extension.GenerateGuard', (resource) => {
 		if (workspace === undefined) {
-			window.showErrorMessage('Please select a workspace first');
+			return window.showErrorMessage('Please select a workspace first');
 		}
 		else {
 			window.showInputBox({
 				placeHolder: "Please enter Guard name",
-			}).then((input) => {
+			}).then<any>((input) => {
 				if (input === undefined) { return; }
 				if (!invalidFileNames.test(input)) {
-					createFile({
+					return createFile({
 						name: input,
 						type: 'guard',
 						associatedArray: undefined,
@@ -200,7 +202,7 @@ export function activate(context: ExtensionContext) {
 					});
 				}
 				else {
-					window.showErrorMessage('Invalid filename');
+					return window.showErrorMessage('Invalid filename');
 				}
 			});
 		}
@@ -208,15 +210,15 @@ export function activate(context: ExtensionContext) {
 
 	let disposableDecoratorCommand = commands.registerCommand('extension.GenerateDecorator', (resource) => {
 		if (workspace === undefined) {
-			window.showErrorMessage('Please select a workspace first');
+			return window.showErrorMessage('Please select a workspace first');
 		}
 		else {
 			window.showInputBox({
 				placeHolder: "Please enter Decorator name",
-			}).then((input) => {
+			}).then<any>((input) => {
 				if (input === undefined) { return; }
 				if (!invalidFileNames.test(input)) {
-					createFile({
+					return createFile({
 						name: input,
 						type: 'decorator',
 						associatedArray: undefined,
@@ -225,7 +227,7 @@ export function activate(context: ExtensionContext) {
 					});
 				}
 				else {
-					window.showErrorMessage('Invalid filename');
+					return window.showErrorMessage('Invalid filename');
 				}
 			});
 		}
@@ -233,10 +235,10 @@ export function activate(context: ExtensionContext) {
 
 	let disposableExceptionFilterCommand = commands.registerCommand('extension.GenerateExceptionFilter', (resource) => {
 		if (workspace === undefined) {
-			window.showErrorMessage('Please select a workspace first');
+			return window.showErrorMessage('Please select a workspace first');
 		}
 		else {
-			createFile({
+			return createFile({
 				name: 'AllExceptions',
 				type: 'filter',
 				associatedArray: 'providers',
@@ -248,10 +250,10 @@ export function activate(context: ExtensionContext) {
 
 	let disposableUnittestCommand = commands.registerCommand('extension.GenerateUnitTest', (resource: Uri) => {
 		if (workspace === undefined) {
-			window.showErrorMessage('Please select a workspace first');
+			return window.showErrorMessage('Please select a workspace first');
 		}
 		else {
-			createFile({
+			return createFile({
 				name: basename(resource.fsPath).split('.')[0],
 				type: 'spec',
 				associatedArray: undefined,

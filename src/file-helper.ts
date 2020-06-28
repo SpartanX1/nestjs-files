@@ -6,7 +6,7 @@ import { TextEncoder, TextDecoder } from 'util';
 import { getPascalCase, getRelativePathForImport, getArraySchematics, getLineNoFromString, getClassName, getCamelCase } from './utils';
 import { NestFile, NestImports, NestProviders } from './nest';
 
-export async function createFile(file: NestFile): Promise<boolean | undefined | string | unknown> {
+export async function createFile(file: NestFile) {
 
     if (fs.existsSync(join(file.uri.fsPath, file.name.toLowerCase() + `.${file.type}.ts`))) {
         return window.showErrorMessage('A file already exists with given name');
