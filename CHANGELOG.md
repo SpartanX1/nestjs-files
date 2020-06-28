@@ -1,4 +1,4 @@
-## 0.3.0
+## 0.4.0
 
 - Added option for exception filter
 - Added option for unit test

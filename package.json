@@ -12,7 +12,7 @@
 	  },
 	"description": "Quickly create NestJS Files",
 	"icon": "images/icon.png",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"engines": {
 		"vscode": "^1.40.0"
 	},
