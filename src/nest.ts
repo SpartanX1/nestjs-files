@@ -7,3 +7,14 @@ export class NestFile {
     uri: Uri;
     associatedArray: string | undefined;
 }
+
+export const NestImports = {
+    filter: `import { APP_FILTER } from '@nestjs/core';`,
+};
+
+export const NestProviders = {
+    filter: `{
+        provide: APP_FILTER,
+        useClass: AllExceptionsFilter,
+      },`,
+};

@@ -1,15 +1,15 @@
 # NestJS Files
 
-vs code extention to quickly create **NestJS files** using **GUI** 
+vs code extension to quickly create **NestJS files** using **GUI** 
 
 ![](images/demo.gif)
 
 ## Features
 
-Right click on any folder in your current project. 
+Right click on any folder/file in your current project. 
 You can find multiple options that has been added to the context menu:
 
-Menu Options  |
+Folder Menu Options  |
 ---           | 
 NestJS - Generate Controller |
 NestJS - Generate Module |
@@ -20,6 +20,12 @@ NestJS - Generate Pipe |
 NestJS - Generate Interceptor |
 NestJS - Generate Decorator |
 NestJS - Generate Guard |
+NestJS - Generate Exception Filter |
+
+File Menu Options  |
+---           | 
+NestJS - Generate Unit Test |
+
 
 > It will also automatically add your created files to app module or your own module depending on the context
 

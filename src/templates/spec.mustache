@@ -1,0 +1,19 @@
+import { Test } from '@nestjs/testing';
+
+describe('{{ Name }}{{ Type }}', () => {
+    let {{ VarName }}: {{ Name }}{{ Type }};
+
+beforeEach(async () => {
+    const moduleRef = await Test.createTestingModule({
+        imports: [], // Add
+        controllers: [], // Add
+        providers: [],   // Add
+    }).compile();
+
+    {{ VarName }} = moduleRef.get<{{ Name }}{{ Type }}>({{ Name }}{{ Type }});
+    });
+
+it('should be defined', () => {
+    expect({{ VarName }}).toBeDefined();
+    });
+});

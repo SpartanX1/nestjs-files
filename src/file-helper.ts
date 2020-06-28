@@ -1,19 +1,28 @@
-import { window, Uri, workspace, WorkspaceEdit, Position } from 'vscode';
+import { window, Uri, workspace, WorkspaceEdit, Position, commands, FileType } from 'vscode';
 import { render } from 'mustache';
 import * as fs from 'fs-extra';
-import { join } from 'path';
+import { join, basename } from 'path';
 import { TextEncoder, TextDecoder } from 'util';
-import { getPascalCase, getRelativePathForImport, getArraySchematics, getLineNoFromString, getClassName } from './utils';
-import { NestFile } from './nest';
+import { getPascalCase, getRelativePathForImport, getArraySchematics, getLineNoFromString, getClassName, getCamelCase } from './utils';
+import { NestFile, NestImports, NestProviders } from './nest';
 
-export async function createFile(file: NestFile): Promise<boolean | undefined | string> {
+export async function createFile(file: NestFile): Promise<boolean | undefined | string | unknown> {
 
     if (fs.existsSync(join(file.uri.fsPath, file.name.toLowerCase() + `.${file.type}.ts`))) {
         return window.showErrorMessage('A file already exists with given name');
     }
     else {
-        file.uri = Uri.parse(file.uri.path + '/' + file.fullName);
 
+        const stats = await workspace.fs.stat(file.uri);
+
+        if(stats.type === FileType.Directory) {
+            file.uri = Uri.parse(file.uri.path + '/' + file.fullName);
+        }
+        else 
+        {
+            file.uri = Uri.parse(file.uri.path.replace(basename(file.uri.path), '') + '/' + file.fullName);
+        }
+        
         return getFileTemplate(file)
             .then((data) => {
                 return workspace.fs.writeFile(file.uri, new TextEncoder().encode(data));
@@ -22,6 +31,22 @@ export async function createFile(file: NestFile): Promise<boolean | undefined | 
                 if (file.associatedArray !== undefined) {
                     return addFilesToAppModule(file);
                 }
+                else {
+                    return true;
+                }
+            })
+            .then(() => {
+                return workspace.openTextDocument(file.uri);
+            })
+            .then((doc) => {
+                return workspace.onDidOpenTextDocument((doc) => {
+                    return commands.executeCommand('editor.action.formatDocument');
+                });
+            })
+            .then(() => {
+                return commands.executeCommand('editor.action.formatDocument');
+            })
+            .then(() => {
                 return true;
             })
             .catch(err =>  { return window.showErrorMessage(err); });
@@ -55,8 +80,12 @@ export async function addFilesToAppModule(file: NestFile): Promise<boolean> {
 export async function getFileTemplate(file: NestFile): Promise<string> {
     return fs.readFile(join(__dirname, `/templates/${file.type}.mustache`), 'utf8')
         .then((data) => {
+            const name  = getClassName(file.name);
+            const type = getPascalCase(basename(file.uri.path).split('.')[1]);
             let view = {
-                Name: getClassName(file.name)
+                Name: name,
+                Type: type,
+                VarName: getCamelCase(name) + type
             };
             return render(data, view);
         });
@@ -85,7 +114,13 @@ export async function addToArray(data: Uint8Array, file: NestFile, modulePath: U
             pos = getLineNoFromString(tempStrData, match);
             const toInsert = '\n        ' + getClassName(file.name) + getPascalCase(file.type) + ', ';
             let edit = new WorkspaceEdit();
-            edit.insert(modulePath, pos, toInsert);
+            if(file.type === 'filter') {
+                edit.insert(modulePath, new Position(0, 0), NestImports.filter + '\n');
+                edit.insert(modulePath, pos, '\n' + NestProviders.filter);
+            }
+            else {
+                edit.insert(modulePath, pos, toInsert);
+            }
             const importPath = await getImportTemplate(file, modulePath);
             edit.insert(modulePath, new Position(0, 0), importPath + '\n');
     

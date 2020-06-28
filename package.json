@@ -28,7 +28,9 @@
 		"onCommand:extension.GenerateInterceptor",
 		"onCommand:extension.GeneratePipe",
 		"onCommand:extension.GenerateGuard",
-		"onCommand:extension.GenerateDecorator"
+		"onCommand:extension.GenerateDecorator",
+		"onCommand:extension.GenerateExceptionFilter",
+		"onCommand:extension.GenerateUnitTest"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -68,44 +70,71 @@
 			{
 				"command": "extension.GenerateDecorator",
 				"title": "NestJS - Generate Decorator"
+			},
+			{
+				"command": "extension.GenerateExceptionFilter",
+				"title": "NestJS - Generate Exception Filter"
+			},
+			{
+				"command": "extension.GenerateUnitTest",
+				"title": "NestJS - Generate Unit Test"
 			}
 		],
 		"menus": {
 			"explorer/context": [
 				{
 					"command": "extension.GenerateModule",
+					"when": "explorerResourceIsFolder",
 					"group": "2_workspace"
 				},
 				{
 					"command": "extension.GenerateService",
+					"when": "explorerResourceIsFolder",
 					"group": "2_workspace"
 				},
 				{
 					"command": "extension.GenerateController",
+					"when": "explorerResourceIsFolder",
 					"group": "2_workspace"
 				},
 				{
 					"command": "extension.GenerateException",
+					"when": "explorerResourceIsFolder",
 					"group": "2_workspace"
 				},
 				{
 					"command": "extension.GenerateMiddleware",
+					"when": "explorerResourceIsFolder",
 					"group": "2_workspace"
 				},
 				{
 					"command": "extension.GenerateInterceptor",
+					"when": "explorerResourceIsFolder",
 					"group": "2_workspace"
 				},
 				{
 					"command": "extension.GeneratePipe",
+					"when": "explorerResourceIsFolder",
 					"group": "2_workspace"
 				},
 				{
 					"command": "extension.GenerateGuard",
+					"when": "explorerResourceIsFolder",
 					"group": "2_workspace"
 				},
 				{
 					"command": "extension.GenerateDecorator",
+					"when": "explorerResourceIsFolder",
+					"group": "2_workspace"
+				},
+				{
+					"command": "extension.GenerateExceptionFilter",
+					"when": "explorerResourceIsFolder",
+					"group": "2_workspace"
+				},
+				{
+					"command": "extension.GenerateUnitTest",
+					"when": "!explorerResourceIsFolder",
 					"group": "2_workspace"
 				}
 			]
