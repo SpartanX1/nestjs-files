@@ -43,7 +43,8 @@ export async function createFile(file: NestFile): Promise<boolean | undefined | 
                     return commands.executeCommand('editor.action.formatDocument');
                 });
             })
-            .then(() => {
+            .then((event) => {
+                event.dispose();
                 return commands.executeCommand('editor.action.formatDocument');
             })
             .then(() => {
