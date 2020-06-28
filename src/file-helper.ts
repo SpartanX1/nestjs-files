@@ -15,46 +15,41 @@ export async function createFile(file: NestFile): Promise<boolean | undefined | 
 
         const stats = await workspace.fs.stat(file.uri);
 
-        if(stats.type === FileType.Directory) {
+        if (stats.type === FileType.Directory) {
             file.uri = Uri.parse(file.uri.path + '/' + file.fullName);
         }
-        else 
-        {
+        else {
             file.uri = Uri.parse(file.uri.path.replace(basename(file.uri.path), '') + '/' + file.fullName);
         }
-        
+
         return getFileTemplate(file)
             .then((data) => {
                 return workspace.fs.writeFile(file.uri, new TextEncoder().encode(data));
             })
             .then(() => {
-                if (file.associatedArray !== undefined) {
-                    return addFilesToAppModule(file);
-                }
-                else {
-                    return true;
-                }
+                return addFilesToAppModule(file);
             })
             .then(() => {
-                return workspace.openTextDocument(file.uri);
-            })
-            .then((doc) => {
-                return workspace.onDidOpenTextDocument((doc) => {
-                    return commands.executeCommand('editor.action.formatDocument');
-                });
-            })
-            .then((event) => {
-                event.dispose();
-                return commands.executeCommand('editor.action.formatDocument');
+                return formatTextDocument(file.uri);
             })
             .then(() => {
                 return true;
             })
-            .catch(err =>  { return window.showErrorMessage(err); });
+            .catch(err => { return window.showErrorMessage(err); });
     }
 }
 
-export async function addFilesToAppModule(file: NestFile): Promise<boolean> {
+export async function formatTextDocument(uri: Uri) {
+    return workspace.openTextDocument(uri)
+        .then((doc) => {
+            return window.showTextDocument(doc);
+        })
+        .then(() => {
+            return commands.executeCommand('editor.action.formatDocument');
+        });
+}
+
+export async function addFilesToAppModule(file: NestFile) {
     let moduleFile: Uri[] = [];
 
     if (file.type === 'service' || file.type === 'controller') {
@@ -64,24 +59,22 @@ export async function addFilesToAppModule(file: NestFile): Promise<boolean> {
     if (moduleFile.length === 0 && file.name !== 'app') {
         moduleFile = await workspace.findFiles('**/app.module.ts', '**/node_modules/**', 1);
     }
-    
+
     if (moduleFile.length !== 0) {
         workspace.saveAll()
-        .then(() => {
-            return workspace.fs.readFile(moduleFile[0]);
-        })
-        .then((data) => {
-            return addToArray(data, file, moduleFile[0]);  
-        });
+            .then(() => {
+                return workspace.fs.readFile(moduleFile[0]);
+            })
+            .then((data) => {
+                return addToArray(data, file, moduleFile[0]);
+            });
     }
-
-    return false;
 }
 
 export async function getFileTemplate(file: NestFile): Promise<string> {
     return fs.readFile(join(__dirname, `/templates/${file.type}.mustache`), 'utf8')
         .then((data) => {
-            const name  = getClassName(file.name);
+            const name = getClassName(file.name);
             const type = getPascalCase(basename(file.uri.path).split('.')[1]);
             let view = {
                 Name: name,
@@ -103,19 +96,19 @@ export async function getImportTemplate(file: NestFile, appModule: Uri): Promise
         });
 }
 
-export async function addToArray(data: Uint8Array, file: NestFile, modulePath: Uri): Promise<boolean> {
-    
+export async function addToArray(data: Uint8Array, file: NestFile, modulePath: Uri) {
+
     if (file.associatedArray !== undefined) {
         const pattern = getArraySchematics(file.associatedArray);
         let match;
         let pos: Position;
         let tempStrData = new TextDecoder().decode(data);
-    
-        if (match = pattern.exec(tempStrData)){
+
+        if (match = pattern.exec(tempStrData)) {
             pos = getLineNoFromString(tempStrData, match);
             const toInsert = '\n        ' + getClassName(file.name) + getPascalCase(file.type) + ', ';
             let edit = new WorkspaceEdit();
-            if(file.type === 'filter') {
+            if (file.type === 'filter') {
                 edit.insert(modulePath, new Position(0, 0), NestImports.filter + '\n');
                 edit.insert(modulePath, pos, '\n' + NestProviders.filter);
             }
@@ -124,12 +117,11 @@ export async function addToArray(data: Uint8Array, file: NestFile, modulePath: U
             }
             const importPath = await getImportTemplate(file, modulePath);
             edit.insert(modulePath, new Position(0, 0), importPath + '\n');
-    
-            return workspace.applyEdit(edit);
+
+            return workspace.applyEdit(edit)
+                .then(() => {
+                    return formatTextDocument(modulePath);
+                });
         }
-
-        return false;
     }
-
-    return false;
 }
