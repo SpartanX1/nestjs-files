@@ -21,6 +21,10 @@ NestJS - Generate Interceptor |
 NestJS - Generate Decorator |
 NestJS - Generate Guard |
 NestJS - Generate Exception Filter |
+NestJS - Generate Transport |
+NestJS - Generate Adapter |
+NestJS - Generate Webpack |
+NestJS - Generate Gateway |
 
 File Menu Options  |
 ---           | 
