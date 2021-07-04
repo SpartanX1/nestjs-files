@@ -1,0 +1,21 @@
+/*
+https://docs.nestjs.com/microservices/custom-transport#custom-transporters
+*/
+
+import { CustomTransportStrategy, Server } from '@nestjs/microservices';
+
+class {{ Name }}Transport
+  extends Server
+  implements CustomTransportStrategy {
+  /**
+   * This method is triggered when you run "app.listen()".
+   */
+  listen(callback: () => void) {
+    callback();
+  }
+
+  /**
+   * This method is triggered on application shutdown.
+   */
+  close() {}
+}

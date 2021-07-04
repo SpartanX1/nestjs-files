@@ -9,15 +9,16 @@
 	"bugs": {
 		"url": "https://github.com/SpartanX1/nestjs-files/issues",
 		"email": "basak.abhijoy@gmail.com"
-	  },
+	},
 	"description": "Quickly create NestJS Files",
 	"icon": "images/icon.png",
-	"version": "0.4.0",
+	"version": "0.5.0",
 	"engines": {
 		"vscode": "^1.40.0"
 	},
 	"categories": [
-		"Other", "Snippets"
+		"Other",
+		"Snippets"
 	],
 	"activationEvents": [
 		"onCommand:extension.GenerateModule",
@@ -30,7 +31,11 @@
 		"onCommand:extension.GenerateGuard",
 		"onCommand:extension.GenerateDecorator",
 		"onCommand:extension.GenerateExceptionFilter",
-		"onCommand:extension.GenerateUnitTest"
+		"onCommand:extension.GenerateUnitTest",
+		"onCommand:extension.GenerateGateway",
+		"onCommand:extension.GenerateRedisAdapter",
+		"onCommand:extension.GenerateTransport",
+		"onCommand:extension.GenerateWebpack"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -78,6 +83,22 @@
 			{
 				"command": "extension.GenerateUnitTest",
 				"title": "NestJS - Generate Unit Test"
+			},
+			{
+				"command": "extension.GenerateGateway",
+				"title": "NestJS - Generate Socket Gateway"
+			},
+			{
+				"command": "extension.GenerateRedisAdapter",
+				"title": "NestJS - Generate Redis Adapter"
+			},
+			{
+				"command": "extension.GenerateTransport",
+				"title": "NestJS - Generate Custom Transport"
+			},
+			{
+				"command": "extension.GenerateWebpack",
+				"title": "NestJS - Generate Webpack"
 			}
 		],
 		"menus": {
@@ -135,6 +156,26 @@
 				{
 					"command": "extension.GenerateUnitTest",
 					"when": "!explorerResourceIsFolder",
+					"group": "2_workspace"
+				},
+				{
+					"command": "extension.GenerateGateway",
+					"when": "explorerResourceIsFolder",
+					"group": "2_workspace"
+				},
+				{
+					"command": "extension.GenerateRedisAdapter",
+					"when": "explorerResourceIsFolder",
+					"group": "2_workspace"
+				},
+				{
+					"command": "extension.GenerateTransport",
+					"when": "explorerResourceIsFolder",
+					"group": "2_workspace"
+				},
+				{
+					"command": "extension.GenerateWebpack",
+					"when": "explorerResourceIsFolder",
 					"group": "2_workspace"
 				}
 			]

@@ -14,21 +14,21 @@ export function activate(context: ExtensionContext) {
 			return window.showInputBox({
 				placeHolder: "Please enter module name",
 			})
-			.then<any>((input) => {
-				if (input === undefined) { return; }
-				if (!invalidFileNames.test(input)) {
-					return createFile({
-						name: input,
-						type: 'module',
-						associatedArray: 'imports',
-						uri: resource,
-						fullName: input.toLowerCase() + `.module.ts`
-					});
-				}
-				else {
-					return  window.showErrorMessage('Invalid filename');
-				}
-			});
+				.then<any>((input) => {
+					if (input === undefined) { return; }
+					if (!invalidFileNames.test(input)) {
+						return createFile({
+							name: input,
+							type: 'module',
+							associatedArray: 'imports',
+							uri: resource,
+							fullName: input.toLowerCase() + `.module.ts`
+						});
+					}
+					else {
+						return window.showErrorMessage('Invalid filename');
+					}
+				});
 		}
 	});
 
@@ -40,21 +40,21 @@ export function activate(context: ExtensionContext) {
 			window.showInputBox({
 				placeHolder: "Please enter Service name",
 			})
-			.then<any>((input) => {
-				if (input === undefined) { return; }
-				if (!invalidFileNames.test(input)) {
-					return createFile({
-						name: input,
-						type: 'service',
-						associatedArray: 'providers',
-						uri: resource,
-						fullName: input.toLowerCase() + `.service.ts`
-					});
-				}
-				else {
-					return window.showErrorMessage('Invalid filename');
-				}
-			});
+				.then<any>((input) => {
+					if (input === undefined) { return; }
+					if (!invalidFileNames.test(input)) {
+						return createFile({
+							name: input,
+							type: 'service',
+							associatedArray: 'providers',
+							uri: resource,
+							fullName: input.toLowerCase() + `.service.ts`
+						});
+					}
+					else {
+						return window.showErrorMessage('Invalid filename');
+					}
+				});
 		}
 	});
 
@@ -263,6 +263,86 @@ export function activate(context: ExtensionContext) {
 		}
 	});
 
+	let disposableGenerateGatewayCommand = commands.registerCommand('extension.GenerateGateway', (resource: Uri) => {
+		if (workspace === undefined) {
+			return window.showErrorMessage('Please select a workspace first');
+		}
+		else {
+			window.showInputBox({
+				placeHolder: "Please enter Gateway name",
+			}).then<any>((input) => {
+				if (input === undefined) { return; }
+				if (!invalidFileNames.test(input)) {
+					return createFile({
+						name: input,
+						type: 'gateway',
+						associatedArray: 'providers',
+						uri: resource,
+						fullName: input.toLowerCase() + `.gateway.ts`
+					});
+				}
+				else {
+					return window.showErrorMessage('Invalid filename');
+				}
+			});
+		}
+	});
+
+	let disposableGenerateRedisAdapterCommand = commands.registerCommand('extension.GenerateRedisAdapter', (resource: Uri) => {
+		if (workspace === undefined) {
+			return window.showErrorMessage('Please select a workspace first');
+		}
+		else {
+			return createFile({
+				name: 'RedisIoAdapter',
+				type: 'adapter',
+				associatedArray: undefined,
+				uri: resource,
+				fullName: 'redis.adapter.ts'
+			});
+		}
+	});
+
+	let disposableTransportCommand = commands.registerCommand('extension.GenerateTransport', (resource: Uri) => {
+		if (workspace === undefined) {
+			return window.showErrorMessage('Please select a workspace first');
+		}
+		else {
+			window.showInputBox({
+				placeHolder: "Please enter Transport name",
+			}).then<any>((input) => {
+				if (input === undefined) { return; }
+				if (!invalidFileNames.test(input)) {
+					return createFile({
+						name: input,
+						type: 'transport',
+						associatedArray: undefined,
+						uri: resource,
+						fullName: input.toLowerCase() + `.transport.ts`
+					});
+				}
+				else {
+					return window.showErrorMessage('Invalid filename');
+				}
+			});
+		}
+	});
+
+	let disposableWebPackCommand = commands.registerCommand('extension.GenerateWebpack', (resource: Uri) => {
+		if (workspace === undefined) {
+			return window.showErrorMessage('Please select a workspace first');
+		}
+		else {
+			return createFile({
+				name: 'webpack',
+				type: 'webpack',
+				associatedArray: undefined,
+				uri: resource,
+				fullName: 'webpack.config.js'
+			});
+		}
+	});
+
 	context.subscriptions.push(
 		disposableModuleCommand,
 		disposableServiceCommand,
@@ -274,7 +354,11 @@ export function activate(context: ExtensionContext) {
 		disposableGuardCommand,
 		disposableDecoratorCommand,
 		disposableExceptionFilterCommand,
-		disposableUnittestCommand
+		disposableUnittestCommand,
+		disposableGenerateGatewayCommand,
+		disposableGenerateRedisAdapterCommand,
+		disposableTransportCommand,
+		disposableWebPackCommand
 	);
 }
 

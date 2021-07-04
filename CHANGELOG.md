@@ -1,3 +1,10 @@
+## 0.5.0
+
+- Added option for transport
+- Added option for gateway
+- Added option for adapter
+- Added option for webpack
+  
 ## 0.4.0
 
 - Added option for exception filter

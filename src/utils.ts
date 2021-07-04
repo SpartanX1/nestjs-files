@@ -17,6 +17,10 @@ export function getArraySchematics(arrayType: string): RegExp {
     return new RegExp(`${arrayType}(\\s+)?:(\\s+)?\\[`);
 }
 
+export function getBootstrapFunction() : RegExp {
+    return new RegExp('app.listen');
+}
+
 export function getLineNoFromString(str: string, match: RegExpExecArray): Position {
     const array = str.substring(0, match.index).split('\n');
     const charPosition = str.split('\n')[array.length - 1].indexOf('[');
