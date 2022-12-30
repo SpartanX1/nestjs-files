@@ -198,7 +198,7 @@
 		"@types/vscode": "^1.40.0",
 		"chai": "^4.2.0",
 		"glob": "^7.1.5",
-		"mocha": "^6.2.2",
+		"mocha": "^10.2.0",
 		"tslint": "^5.20.0",
 		"typescript": "^3.6.4",
 		"vscode-test": "^1.2.2"
